@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">ClipMyCard</string>
-
+    <string name="numberofcard">Du har {0} kort</string>
+    <string name="bar">Bar</string>
+    <string name="cardPrice">Price</string>
 </resources>

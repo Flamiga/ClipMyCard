@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="#AAAAAA"
+        card_view:cardCornerRadius="20dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true"
+        card_view:contentPaddingBottom="-5dp"
+        card_view:contentPaddingLeft="2dp"
+        card_view:contentPaddingRight="2dp"
+        card_view:contentPaddingTop="-5dp"
+        android:id="@+id/list_element_card">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bar"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:id="@+id/list_element_title"/>
+
+
+                    <TextView
+                        android:id="@+id/list_element_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cardPrice"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/checkBox1"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox2"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox3"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox4"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox5"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/checkBox6"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox7"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox8"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox9"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox10"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="?android:attr/listChoiceIndicatorMultiple"
+                            android:button="@null"
+                            android:buttonTint="@color/checkboxcolor"
+                            android:theme="@style/customCheckBox" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
