@@ -2,6 +2,7 @@ package com.ebookfrenzy.clipmycard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -11,7 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ebookfrenzy.clipmycard.adapter.CardAdapter
 import com.ebookfrenzy.clipmycard.models.Card
 import com.ebookfrenzy.clipmycard.repositories.CardRepository
+import com.ebookfrenzy.clipmycard.repositories.CardRepository.initRepository
 import kotlinx.android.synthetic.main.activity_main.*
+import androidx.lifecycle.Observer
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,10 +29,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initRepository(this)
 
-      val String = getString(R.string.numberofcard)
+        CardRepository.getAllCards().observe(this, Observer {
+            if (it.size > 0) {
+                cardList = it as MutableList<Card>
+                //update UI
+                Log.d("ReceivedData", "Books from database")
+                for (book in it)
+                    Log.d("Book:", cardList.toString())
+            }
+        })
+        val String = getString(R.string.numberofcard)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, bars)
         updateUI()
+
+        GlobalScope.launch {
+           val card = Card(6, "Hornsleth", false, 200, 0)
+            CardRepository.addCard(card)
+
+            val card1 = Card(5, "The Australian Bar", true, 350, 4)
+            CardRepository.updateCard(card1)
+        }
 
 
         spinner.adapter = adapter
@@ -49,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                     "Du har valgt: " + bars[position],
                     Toast.LENGTH_SHORT
                 ).show()
-            //filter bar i dropdown
+                //filter bar i dropdown
                 val selectBar = bars[position]
                 if (selectBar == "Alle") {
                     cardAdapter.filter?.filter("")
@@ -70,7 +93,6 @@ class MainActivity : AppCompatActivity() {
         cardList = CardRepository.getData()
 
         card_recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-
 
         cardAdapter = CardAdapter(cardList)
 
