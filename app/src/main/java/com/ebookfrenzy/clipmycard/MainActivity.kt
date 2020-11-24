@@ -1,5 +1,6 @@
 package com.ebookfrenzy.clipmycard
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,10 @@ import com.ebookfrenzy.clipmycard.repositories.CardRepository
 import com.ebookfrenzy.clipmycard.repositories.CardRepository.initRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.lifecycle.Observer
+import com.ebookfrenzy.clipmycard.Fragment.YesOrNoFragment
+//import com.ebookfrenzy.clipmycard.Fragment.YesOrNoFragment
+import kotlinx.android.synthetic.main.list_element.*
+import kotlinx.android.synthetic.main.list_element.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -45,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         updateUI()
 
         GlobalScope.launch {
-           val card = Card(6, "Hornsleth", false, 200, 0)
+            val card = Card(6, "Hornsleth", false, 200, 0)
             CardRepository.addCard(card)
 
             val card1 = Card(5, "The Australian Bar", true, 350, 4)
@@ -81,13 +86,10 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
+
         }
-        //val position = spinner.selectedItemPosition
-
-        //val bar = spinner.selectedItem
-
-
     }
+
 
     private fun updateUI() {
         cardList = CardRepository.getData()
@@ -98,4 +100,5 @@ class MainActivity : AppCompatActivity() {
 
         card_recyclerView.adapter = cardAdapter
     }
+
 }

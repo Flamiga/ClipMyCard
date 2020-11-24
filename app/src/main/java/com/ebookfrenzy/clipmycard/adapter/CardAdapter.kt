@@ -4,15 +4,20 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.Filterable
 import android.widget.Filter
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.ebookfrenzy.clipmycard.Fragment.YesOrNoFragment
 import com.ebookfrenzy.clipmycard.R
 import com.ebookfrenzy.clipmycard.models.Card
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.list_element.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,7 +46,7 @@ class CardAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       // holder.bindItems(cardList[position])
+        // holder.bindItems(cardList[position])
         //Tjek linje 26 med reference listen
         holder.bindItems(cardFilterList[position])
     }
@@ -57,56 +62,192 @@ class CardAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+
         fun bindItems(
             card: Card
+
         ) {
-            //tjek linje 38-39 i referencen bør jeg gør det samme?
             itemView.list_element_title.text = card.title
             itemView.list_element_price.text = card.price.toString()
-            //itemView.list_element_card.
-            if (card.activated) {
-                itemView.list_element_card.setCardBackgroundColor(Color.rgb(231, 219, 40))
-            }
 
-            if (card.checked >= 1)
-                itemView.checkBox1.isChecked = true
-            if (card.checked >= 2)
-                itemView.checkBox2.isChecked = true
-            if (card.checked >= 3)
-                itemView.checkBox3.isChecked = true
-            if (card.checked >= 4)
-                itemView.checkBox4.isChecked = true
-            if (card.checked >= 5)
-                itemView.checkBox5.isChecked = true
-            if (card.checked >= 6)
-                itemView.checkBox6.isChecked = true
-            if (card.checked >= 7)
-                itemView.checkBox7.isChecked = true
-            if (card.checked >= 8)
-                itemView.checkBox8.isChecked = true
-            if (card.checked >= 9)
-                itemView.checkBox9.isChecked = true
-            if (card.checked >= 10)
-                itemView.checkBox10.isChecked = true
+            itemView.checkBox1.isChecked = false
+            itemView.checkBox2.isChecked = false
+            itemView.checkBox3.isChecked = false
+            itemView.checkBox4.isChecked = false
+            itemView.checkBox5.isChecked = false
+            itemView.checkBox6.isChecked = false
+            itemView.checkBox7.isChecked = false
+            itemView.checkBox8.isChecked = false
+            itemView.checkBox9.isChecked = false
+            itemView.checkBox10.isChecked = false
+
+
+            if (card.activated) {
+                itemView.list_element_card.isClickable = true
+                itemView.list_element_card.setCardBackgroundColor(Color.rgb(231, 219, 40))
+                itemView.checkBox1.setOnClickListener {
+                    if (itemView.checkBox1.isChecked) {
+                        card.checked++
+                    } else {
+                        itemView.checkBox1.isChecked = true
+                    }
+                }
+
+                itemView.checkBox2.setOnClickListener {
+                    if (itemView.checkBox2.isChecked) {
+                        card.checked++
+                    } else {
+                        itemView.checkBox2.isChecked = true
+                    }
+                }
+                itemView.checkBox3.setOnClickListener {
+                    if (itemView.checkBox3.isChecked) {
+                        card.checked++
+                    } else {
+                        itemView.checkBox3.isChecked = true
+                    }
+                }
+                itemView.checkBox4.setOnClickListener {
+                    if (itemView.checkBox4.isChecked) {
+                        card.checked++
+                    } else {
+                        itemView.checkBox4.isChecked = true
+                    }
+                }
+                itemView.checkBox5.setOnClickListener {
+                    if (itemView.checkBox5.isChecked) {
+                        card.checked++
+                    } else {
+                        itemView.checkBox5.isChecked = true
+                    }
+                }
+                itemView.checkBox6.setOnClickListener {
+                    if (itemView.checkBox6.isChecked) {
+                        card.checked++
+                    } else {
+                        itemView.checkBox6.isChecked = true
+                    }
+                }
+                itemView.checkBox7.setOnClickListener {
+                    if (itemView.checkBox7.isChecked) {
+                        card.checked++
+                    } else {
+                        itemView.checkBox7.isChecked = true
+                    }
+                }
+                itemView.checkBox8.setOnClickListener {
+                    if (itemView.checkBox8.isChecked) {
+                        card.checked++
+                    } else {
+                        itemView.checkBox8.isChecked = true
+                    }
+                }
+                itemView.checkBox9.setOnClickListener {
+                    if (itemView.checkBox9.isChecked) {
+                        card.checked++
+                    } else {
+                        itemView.checkBox9.isChecked = true
+                    }
+                }
+                // sætter den sidste kryds til at skifte farve for at vise at kortet er brugt op.
+                itemView.checkBox10.setOnClickListener {
+                    if (itemView.checkBox10.isChecked) {
+                        card.checked++
+                        itemView.list_element_card.setCardBackgroundColor(Color.GRAY)
+                    } else {
+                        itemView.checkBox10.isChecked = true
+                    }
+                }
+
+                if (card.checked >= 1)
+                    itemView.checkBox1.isChecked = true
+                 if (card.checked >= 2)
+                      itemView.checkBox2.isChecked = true
+                  if (card.checked >= 3)
+                      itemView.checkBox3.isChecked = true
+                  if (card.checked >= 4)
+                      itemView.checkBox4.isChecked = true
+                  if (card.checked >= 5)
+                      itemView.checkBox5.isChecked = true
+                  if (card.checked >= 6)
+                      itemView.checkBox6.isChecked = true
+                  if (card.checked >= 7)
+                      itemView.checkBox7.isChecked = true
+                  if (card.checked >= 8)
+                      itemView.checkBox8.isChecked = true
+                  if (card.checked >= 9)
+                      itemView.checkBox9.isChecked = true
+                  if (card.checked >= 10)
+                      itemView.checkBox10.isChecked = true
+            } else {
+
+                itemView.checkBox1.isClickable = false
+                itemView.checkBox2.isClickable = false
+                itemView.checkBox3.isClickable = false
+                itemView.checkBox4.isClickable = false
+                itemView.checkBox5.isClickable = false
+                itemView.checkBox6.isClickable = false
+                itemView.checkBox7.isClickable = false
+                itemView.checkBox8.isClickable = false
+                itemView.checkBox9.isClickable = false
+                itemView.checkBox10.isClickable = false
+                itemView.list_element_card.setCardBackgroundColor(Color.GRAY)
+
+                //callback function from yes/no dialog - for yes choice
+                fun yesClicked() {
+                    val toast = Toast.makeText(
+                        this,
+                        "yes button clicked", Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    itemView.list_element_card.setBackgroundColor(Color.YELLOW) //clearing the data
+                }
+
+
+                //callback function from yes/no dialog - for no choice
+                fun noClick() {
+                    //Here we override the method and can now do something
+                    val toast = Toast.makeText(
+                        this,
+                        "no button clicked", Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                }
+
+                fun showDialog(v: View) {
+                    //showing our dialog.
+
+                    val dialog = YesOrNoFragment(::yesClicked, ::noClick)
+                    //Here we show the dialog
+                    //The tag "MyFragement" is not important for us.
+                    dialog.show(supportFragmentManager, "myFragment")
+                }
+
+
+
+
+
+            }
 
         }
 
-
     }
+
     //implement the filterable
-    // Reference: https://www.tutorialsbuzz.com/2020/09/android-recyclerView-data-list-filterable-kotlin.html
+// Reference: https://www.tutorialsbuzz.com/2020/09/android-recyclerView-data-list-filterable-kotlin.html
     override fun getFilter(): Filter? {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filterString = constraint.toString()
-                if(filterString.isEmpty()) {
+                if (filterString.isEmpty()) {
                     cardFilterList = cardList as ArrayList<Card>
                 } else {
                     val resultList = ArrayList<Card>()
                     for (row in cardList) {
-                        if (row.title.toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(
-                                Locale.ROOT
-                            )
+                        if (row.title.toLowerCase(Locale.ROOT).contains(
+                                constraint.toString().toLowerCase(
+                                    Locale.ROOT
+                                )
                             )
                         ) {
 
@@ -129,5 +270,6 @@ class CardAdapter(
             }
         }
     }
+
 
 }

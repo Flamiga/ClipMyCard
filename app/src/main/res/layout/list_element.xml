@@ -7,8 +7,10 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/list_element_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="showDialog"
         card_view:cardBackgroundColor="#AAAAAA"
         card_view:cardCornerRadius="20dp"
         card_view:cardPreventCornerOverlap="false"
@@ -16,8 +18,7 @@
         card_view:contentPaddingBottom="-5dp"
         card_view:contentPaddingLeft="2dp"
         card_view:contentPaddingRight="2dp"
-        card_view:contentPaddingTop="-5dp"
-        android:id="@+id/list_element_card">
+        card_view:contentPaddingTop="-5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,12 +40,12 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/list_element_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/bar"
                         android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:id="@+id/list_element_title"/>
+                        android:textStyle="bold" />
 
 
                     <TextView

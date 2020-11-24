@@ -62,8 +62,7 @@ object CardRepository {
             Card(
                 id = 2,
                 title = "The Australian Bar, Aarhus",
-                price = 200, activated = true,
-                checked = 4
+                price = 200, activated = true
             )
         )
         cards.add(
@@ -71,7 +70,6 @@ object CardRepository {
                 id = 3,
                 title = "Guldhornerne, Aarhus",
                 price = 250,
-                checked = 1,
                 activated = true
             )
         )
