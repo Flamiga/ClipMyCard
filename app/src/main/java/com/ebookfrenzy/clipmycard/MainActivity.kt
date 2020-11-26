@@ -40,9 +40,9 @@ class MainActivity : AppCompatActivity() {
             if (it.size > 0) {
                 cardList = it as MutableList<Card>
                 //update UI
-                Log.d("ReceivedData", "Books from database")
+                Log.d("ReceivedData", "cards from database")
                 for (book in it)
-                    Log.d("Book:", cardList.toString())
+                    Log.d("cards:", cardList.toString())
             }
         })
         val String = getString(R.string.numberofcard)
@@ -90,13 +90,47 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //callback function from yes/no dialog - for yes choice
+    fun yesClicked(card: Card) {
+        val toast = Toast.makeText(
+            this,
+            "yes button clicked", Toast.LENGTH_LONG
+        )
+        card.activated = true
+        cardAdapter.notifyDataSetChanged()
+        toast.show()
+    }
+
+
+    //callback function from yes/no dialog - for no choice
+    fun noClick() {
+        //Here we override the method and can now do something
+        val toast = Toast.makeText(
+            this,
+            "no button clicked", Toast.LENGTH_LONG
+        )
+        toast.show()
+    }
+
+    fun cardClicked(card: Card) {
+        showDialog(card)
+    }
+
+    fun showDialog(card: Card) {
+        //showing our dialog.
+
+        val dialog = YesOrNoFragment(::yesClicked, ::noClick, card)
+        //Here we show the dialog
+        //The tag "MyFragement" is not important for us.
+        dialog.show(supportFragmentManager, "myFragment")
+    }
 
     private fun updateUI() {
         cardList = CardRepository.getData()
 
         card_recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        cardAdapter = CardAdapter(cardList)
+        cardAdapter = CardAdapter(cardList, ::cardClicked)
 
         card_recyclerView.adapter = cardAdapter
     }

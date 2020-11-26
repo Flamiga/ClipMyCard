@@ -23,7 +23,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CardAdapter(
-    var cardList: List<Card>
+    var cardList: List<Card>,
+    val cardClicked: (Card) -> Unit
 
 
 ) : RecyclerView.Adapter<CardAdapter.ViewHolder>(), Filterable {
@@ -47,8 +48,7 @@ class CardAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // holder.bindItems(cardList[position])
-        //Tjek linje 26 med reference listen
-        holder.bindItems(cardFilterList[position])
+        holder.bindItems(cardFilterList[position], cardClicked)
     }
 
     //this method is giving the size of the list - this MUST be implemented as this
@@ -64,7 +64,8 @@ class CardAdapter(
 
 
         fun bindItems(
-            card: Card
+            card: Card,
+            cardClicked: (Card) -> Unit
 
         ) {
             itemView.list_element_title.text = card.title
@@ -83,7 +84,6 @@ class CardAdapter(
 
 
             if (card.activated) {
-                itemView.list_element_card.isClickable = true
                 itemView.list_element_card.setCardBackgroundColor(Color.rgb(231, 219, 40))
                 itemView.checkBox1.setOnClickListener {
                     if (itemView.checkBox1.isChecked) {
@@ -161,24 +161,24 @@ class CardAdapter(
 
                 if (card.checked >= 1)
                     itemView.checkBox1.isChecked = true
-                 if (card.checked >= 2)
-                      itemView.checkBox2.isChecked = true
-                  if (card.checked >= 3)
-                      itemView.checkBox3.isChecked = true
-                  if (card.checked >= 4)
-                      itemView.checkBox4.isChecked = true
-                  if (card.checked >= 5)
-                      itemView.checkBox5.isChecked = true
-                  if (card.checked >= 6)
-                      itemView.checkBox6.isChecked = true
-                  if (card.checked >= 7)
-                      itemView.checkBox7.isChecked = true
-                  if (card.checked >= 8)
-                      itemView.checkBox8.isChecked = true
-                  if (card.checked >= 9)
-                      itemView.checkBox9.isChecked = true
-                  if (card.checked >= 10)
-                      itemView.checkBox10.isChecked = true
+                if (card.checked >= 2)
+                    itemView.checkBox2.isChecked = true
+                if (card.checked >= 3)
+                    itemView.checkBox3.isChecked = true
+                if (card.checked >= 4)
+                    itemView.checkBox4.isChecked = true
+                if (card.checked >= 5)
+                    itemView.checkBox5.isChecked = true
+                if (card.checked >= 6)
+                    itemView.checkBox6.isChecked = true
+                if (card.checked >= 7)
+                    itemView.checkBox7.isChecked = true
+                if (card.checked >= 8)
+                    itemView.checkBox8.isChecked = true
+                if (card.checked >= 9)
+                    itemView.checkBox9.isChecked = true
+                if (card.checked >= 10)
+                    itemView.checkBox10.isChecked = true
             } else {
 
                 itemView.checkBox1.isClickable = false
@@ -192,46 +192,15 @@ class CardAdapter(
                 itemView.checkBox9.isClickable = false
                 itemView.checkBox10.isClickable = false
                 itemView.list_element_card.setCardBackgroundColor(Color.GRAY)
-
-                //callback function from yes/no dialog - for yes choice
-                fun yesClicked() {
-                    val toast = Toast.makeText(
-                        this,
-                        "yes button clicked", Toast.LENGTH_LONG
-                    )
-                    toast.show()
-                    itemView.list_element_card.setBackgroundColor(Color.YELLOW) //clearing the data
-                }
-
-
-                //callback function from yes/no dialog - for no choice
-                fun noClick() {
-                    //Here we override the method and can now do something
-                    val toast = Toast.makeText(
-                        this,
-                        "no button clicked", Toast.LENGTH_LONG
-                    )
-                    toast.show()
-                }
-
-                fun showDialog(v: View) {
-                    //showing our dialog.
-
-                    val dialog = YesOrNoFragment(::yesClicked, ::noClick)
-                    //Here we show the dialog
-                    //The tag "MyFragement" is not important for us.
-                    dialog.show(supportFragmentManager, "myFragment")
-                }
-
-
-
-
+                itemView.list_element_card.setOnClickListener { cardClicked(card) }
 
             }
 
         }
 
     }
+
+
 
     //implement the filterable
 // Reference: https://www.tutorialsbuzz.com/2020/09/android-recyclerView-data-list-filterable-kotlin.html
