@@ -7,4 +7,6 @@
     <string name="areYouSure"> Are you sure you want to purchase?</string>
     <string name="yes"> Yes</string>
     <string name="no">No</string>
+
+    <string name="scanbar_title">Scan</string>
 </resources>

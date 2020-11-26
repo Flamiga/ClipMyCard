@@ -38,6 +38,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //implementere zxing library for scanbar fra
+    // https://www.brightec.co.uk/blog/howto-creating-barcode-kotlin-androids
+    implementation 'com.google.zxing:core:3.4.0'
+
     //Reference fra https://developer.android.com/jetpack/androidx/releases/room
     def room_version = "2.2.5"
 

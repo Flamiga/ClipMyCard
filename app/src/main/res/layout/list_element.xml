@@ -10,7 +10,6 @@
         android:id="@+id/list_element_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="showDialog"
         card_view:cardBackgroundColor="#AAAAAA"
         card_view:cardCornerRadius="20dp"
         card_view:cardPreventCornerOverlap="false"
