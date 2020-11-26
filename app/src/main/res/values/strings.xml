@@ -3,8 +3,8 @@
     <string name="numberofcard">Du har {0} kort</string>
     <string name="bar">Bar</string>
     <string name="cardPrice">Price</string>
-    <string name="confirmation" />
-    <string name="areYouSure" />
-    <string name="yes" />
-    <string name="no" />
+    <string name="confirmation">Confirmation</string>
+    <string name="areYouSure"> Are you sure you want to purchase?</string>
+    <string name="yes"> Yes</string>
+    <string name="no">No</string>
 </resources>

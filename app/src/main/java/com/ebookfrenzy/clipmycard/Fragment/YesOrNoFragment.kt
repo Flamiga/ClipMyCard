@@ -6,8 +6,9 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.ebookfrenzy.clipmycard.R
+import com.ebookfrenzy.clipmycard.models.Card
 
-open class YesOrNoFragment(var yesClick: () -> Unit, var noClick: () -> Unit) : DialogFragment() {
+open class YesOrNoFragment(var yesClick: (Card) -> Unit, var noClick: () -> Unit, card: Card) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         //Here we create a new dialogbuilder;
@@ -24,7 +25,7 @@ open class YesOrNoFragment(var yesClick: () -> Unit, var noClick: () -> Unit) : 
     //the yes button
     private var yListener: DialogInterface.OnClickListener = DialogInterface.OnClickListener { _, _ ->
         // these will be executed when user click Yes button
-        yesClick()
+        yesClick(card)
     }
 
     //This is our negative listener for when the user presses
