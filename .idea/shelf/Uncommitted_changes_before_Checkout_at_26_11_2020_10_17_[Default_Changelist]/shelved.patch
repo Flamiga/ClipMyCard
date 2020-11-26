@@ -1,0 +1,125 @@
+Index: app/src/main/java/com/ebookfrenzy/clipmycard/adapter/CardAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ebookfrenzy.clipmycard.adapter\r\n\r\nimport android.content.Context\r\nimport android.content.res.ColorStateList\r\nimport android.content.res.Resources\r\nimport android.graphics.Color\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.CheckBox\r\nimport android.widget.Filterable\r\nimport android.widget.Filter\r\nimport android.widget.Toast\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport androidx.recyclerview.widget.RecyclerView.ViewHolder\r\nimport com.ebookfrenzy.clipmycard.Fragment.YesOrNoFragment\r\nimport com.ebookfrenzy.clipmycard.R\r\nimport com.ebookfrenzy.clipmycard.models.Card\r\nimport kotlinx.android.synthetic.main.activity_main.view.*\r\nimport kotlinx.android.synthetic.main.list_element.view.*\r\nimport java.util.*\r\nimport kotlin.collections.ArrayList\r\n\r\nclass CardAdapter(\r\n    var cardList: List<Card>\r\n\r\n\r\n) : RecyclerView.Adapter<CardAdapter.ViewHolder>(), Filterable {\r\n\r\n    private lateinit var context: Context\r\n\r\n    var cardFilterList = ArrayList<Card>()\r\n\r\n    init {\r\n        cardFilterList = cardList as ArrayList<Card>\r\n    }\r\n\r\n    //this method is returning the view for each item in the list\r\n    //also something you must override\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {\r\n        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_element, parent, false)\r\n        context = parent.context\r\n\r\n        return ViewHolder(view)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: ViewHolder, position: Int) {\r\n        // holder.bindItems(cardList[position])\r\n        //Tjek linje 26 med reference listen\r\n        holder.bindItems(cardFilterList[position])\r\n    }\r\n\r\n    //this method is giving the size of the list - this MUST be implemented as this\r\n    //also overrides something from the RecyclerView Class\r\n    override fun getItemCount(): Int {\r\n        // kan man det her??\r\n        return cardFilterList.size\r\n        //return cardList.size\r\n    }\r\n\r\n\r\n    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {\r\n\r\n\r\n        fun bindItems(\r\n            card: Card\r\n\r\n        ) {\r\n            itemView.list_element_title.text = card.title\r\n            itemView.list_element_price.text = card.price.toString()\r\n\r\n            itemView.checkBox1.isChecked = false\r\n            itemView.checkBox2.isChecked = false\r\n            itemView.checkBox3.isChecked = false\r\n            itemView.checkBox4.isChecked = false\r\n            itemView.checkBox5.isChecked = false\r\n            itemView.checkBox6.isChecked = false\r\n            itemView.checkBox7.isChecked = false\r\n            itemView.checkBox8.isChecked = false\r\n            itemView.checkBox9.isChecked = false\r\n            itemView.checkBox10.isChecked = false\r\n\r\n\r\n            if (card.activated) {\r\n                itemView.list_element_card.isClickable = true\r\n                itemView.list_element_card.setCardBackgroundColor(Color.rgb(231, 219, 40))\r\n                itemView.checkBox1.setOnClickListener {\r\n                    if (itemView.checkBox1.isChecked) {\r\n                        card.checked++\r\n                    } else {\r\n                        itemView.checkBox1.isChecked = true\r\n                    }\r\n                }\r\n\r\n                itemView.checkBox2.setOnClickListener {\r\n                    if (itemView.checkBox2.isChecked) {\r\n                        card.checked++\r\n                    } else {\r\n                        itemView.checkBox2.isChecked = true\r\n                    }\r\n                }\r\n                itemView.checkBox3.setOnClickListener {\r\n                    if (itemView.checkBox3.isChecked) {\r\n                        card.checked++\r\n                    } else {\r\n                        itemView.checkBox3.isChecked = true\r\n                    }\r\n                }\r\n                itemView.checkBox4.setOnClickListener {\r\n                    if (itemView.checkBox4.isChecked) {\r\n                        card.checked++\r\n                    } else {\r\n                        itemView.checkBox4.isChecked = true\r\n                    }\r\n                }\r\n                itemView.checkBox5.setOnClickListener {\r\n                    if (itemView.checkBox5.isChecked) {\r\n                        card.checked++\r\n                    } else {\r\n                        itemView.checkBox5.isChecked = true\r\n                    }\r\n                }\r\n                itemView.checkBox6.setOnClickListener {\r\n                    if (itemView.checkBox6.isChecked) {\r\n                        card.checked++\r\n                    } else {\r\n                        itemView.checkBox6.isChecked = true\r\n                    }\r\n                }\r\n                itemView.checkBox7.setOnClickListener {\r\n                    if (itemView.checkBox7.isChecked) {\r\n                        card.checked++\r\n                    } else {\r\n                        itemView.checkBox7.isChecked = true\r\n                    }\r\n                }\r\n                itemView.checkBox8.setOnClickListener {\r\n                    if (itemView.checkBox8.isChecked) {\r\n                        card.checked++\r\n                    } else {\r\n                        itemView.checkBox8.isChecked = true\r\n                    }\r\n                }\r\n                itemView.checkBox9.setOnClickListener {\r\n                    if (itemView.checkBox9.isChecked) {\r\n                        card.checked++\r\n                    } else {\r\n                        itemView.checkBox9.isChecked = true\r\n                    }\r\n                }\r\n                // sætter den sidste kryds til at skifte farve for at vise at kortet er brugt op.\r\n                itemView.checkBox10.setOnClickListener {\r\n                    if (itemView.checkBox10.isChecked) {\r\n                        card.checked++\r\n                        itemView.list_element_card.setCardBackgroundColor(Color.GRAY)\r\n                    } else {\r\n                        itemView.checkBox10.isChecked = true\r\n                    }\r\n                }\r\n\r\n                if (card.checked >= 1)\r\n                    itemView.checkBox1.isChecked = true\r\n                 if (card.checked >= 2)\r\n                      itemView.checkBox2.isChecked = true\r\n                  if (card.checked >= 3)\r\n                      itemView.checkBox3.isChecked = true\r\n                  if (card.checked >= 4)\r\n                      itemView.checkBox4.isChecked = true\r\n                  if (card.checked >= 5)\r\n                      itemView.checkBox5.isChecked = true\r\n                  if (card.checked >= 6)\r\n                      itemView.checkBox6.isChecked = true\r\n                  if (card.checked >= 7)\r\n                      itemView.checkBox7.isChecked = true\r\n                  if (card.checked >= 8)\r\n                      itemView.checkBox8.isChecked = true\r\n                  if (card.checked >= 9)\r\n                      itemView.checkBox9.isChecked = true\r\n                  if (card.checked >= 10)\r\n                      itemView.checkBox10.isChecked = true\r\n            } else {\r\n\r\n                itemView.checkBox1.isClickable = false\r\n                itemView.checkBox2.isClickable = false\r\n                itemView.checkBox3.isClickable = false\r\n                itemView.checkBox4.isClickable = false\r\n                itemView.checkBox5.isClickable = false\r\n                itemView.checkBox6.isClickable = false\r\n                itemView.checkBox7.isClickable = false\r\n                itemView.checkBox8.isClickable = false\r\n                itemView.checkBox9.isClickable = false\r\n                itemView.checkBox10.isClickable = false\r\n                itemView.list_element_card.setCardBackgroundColor(Color.GRAY)\r\n\r\n                //callback function from yes/no dialog - for yes choice\r\n                fun yesClicked() {\r\n                    val toast = Toast.makeText(\r\n                        this,\r\n                        \"yes button clicked\", Toast.LENGTH_LONG\r\n                    )\r\n                    toast.show()\r\n                    itemView.list_element_card.setBackgroundColor(Color.YELLOW) //clearing the data\r\n                }\r\n\r\n\r\n                //callback function from yes/no dialog - for no choice\r\n                fun noClick() {\r\n                    //Here we override the method and can now do something\r\n                    val toast = Toast.makeText(\r\n                        this,\r\n                        \"no button clicked\", Toast.LENGTH_LONG\r\n                    )\r\n                    toast.show()\r\n                }\r\n\r\n                fun showDialog(v: View) {\r\n                    //showing our dialog.\r\n\r\n                    val dialog = YesOrNoFragment(::yesClicked, ::noClick)\r\n                    //Here we show the dialog\r\n                    //The tag \"MyFragement\" is not important for us.\r\n                    dialog.show(supportFragmentManager, \"myFragment\")\r\n                }\r\n\r\n\r\n\r\n\r\n\r\n            }\r\n\r\n        }\r\n\r\n    }\r\n\r\n    //implement the filterable\r\n// Reference: https://www.tutorialsbuzz.com/2020/09/android-recyclerView-data-list-filterable-kotlin.html\r\n    override fun getFilter(): Filter? {\r\n        return object : Filter() {\r\n            override fun performFiltering(constraint: CharSequence?): FilterResults {\r\n                val filterString = constraint.toString()\r\n                if (filterString.isEmpty()) {\r\n                    cardFilterList = cardList as ArrayList<Card>\r\n                } else {\r\n                    val resultList = ArrayList<Card>()\r\n                    for (row in cardList) {\r\n                        if (row.title.toLowerCase(Locale.ROOT).contains(\r\n                                constraint.toString().toLowerCase(\r\n                                    Locale.ROOT\r\n                                )\r\n                            )\r\n                        ) {\r\n\r\n                            resultList.add(row)\r\n\r\n                        }\r\n                    }\r\n                    cardFilterList = resultList\r\n\r\n                }\r\n                val filterResults = FilterResults()\r\n                filterResults.values = cardFilterList\r\n                return filterResults\r\n            }\r\n\r\n            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {\r\n                cardFilterList = results?.values as ArrayList<Card>\r\n                //fortæller adapter at der er ændret nogle ting\r\n                notifyDataSetChanged()\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/ebookfrenzy/clipmycard/adapter/CardAdapter.kt	(revision 1f77cb723ab191909c74861a7f99d89ecea2cae6)
++++ app/src/main/java/com/ebookfrenzy/clipmycard/adapter/CardAdapter.kt	(date 1606381957460)
+@@ -12,6 +12,8 @@
+ import android.widget.Filterable
+ import android.widget.Filter
+ import android.widget.Toast
++import androidx.fragment.app.FragmentActivity
++import androidx.fragment.app.FragmentManager
+ import androidx.recyclerview.widget.RecyclerView
+ import androidx.recyclerview.widget.RecyclerView.ViewHolder
+ import com.ebookfrenzy.clipmycard.Fragment.YesOrNoFragment
+@@ -23,10 +25,12 @@
+ import kotlin.collections.ArrayList
+ 
+ class CardAdapter(
+-    var cardList: List<Card>
++    var cardList: List<Card>,
++    val clickFunc : (Card) -> Unit
++
+ 
+ 
+-) : RecyclerView.Adapter<CardAdapter.ViewHolder>(), Filterable {
++) : RecyclerView.Adapter<CardAdapter.ViewHolder>(), Filterable{
+ 
+     private lateinit var context: Context
+ 
+@@ -41,14 +45,13 @@
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_element, parent, false)
+         context = parent.context
+-
+         return ViewHolder(view)
+     }
+ 
+     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+         // holder.bindItems(cardList[position])
+         //Tjek linje 26 med reference listen
+-        holder.bindItems(cardFilterList[position])
++        holder.bindItems(cardFilterList[position],clickFunc)
+     }
+ 
+     //this method is giving the size of the list - this MUST be implemented as this
+@@ -64,7 +67,7 @@
+ 
+ 
+         fun bindItems(
+-            card: Card
++            card: Card,clickFunc: (Card) -> Unit
+ 
+         ) {
+             itemView.list_element_title.text = card.title
+@@ -192,38 +195,9 @@
+                 itemView.checkBox9.isClickable = false
+                 itemView.checkBox10.isClickable = false
+                 itemView.list_element_card.setCardBackgroundColor(Color.GRAY)
+-
+-                //callback function from yes/no dialog - for yes choice
+-                fun yesClicked() {
+-                    val toast = Toast.makeText(
+-                        this,
+-                        "yes button clicked", Toast.LENGTH_LONG
+-                    )
+-                    toast.show()
+-                    itemView.list_element_card.setBackgroundColor(Color.YELLOW) //clearing the data
+-                }
+-
+-
+-                //callback function from yes/no dialog - for no choice
+-                fun noClick() {
+-                    //Here we override the method and can now do something
+-                    val toast = Toast.makeText(
+-                        this,
+-                        "no button clicked", Toast.LENGTH_LONG
+-                    )
+-                    toast.show()
++                itemView.list_element_card.setOnClickListener {
++                    clickFunc(card)
+                 }
+-
+-                fun showDialog(v: View) {
+-                    //showing our dialog.
+-
+-                    val dialog = YesOrNoFragment(::yesClicked, ::noClick)
+-                    //Here we show the dialog
+-                    //The tag "MyFragement" is not important for us.
+-                    dialog.show(supportFragmentManager, "myFragment")
+-                }
+-
+-
+ 
+ 
+ 
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">ClipMyCard</string>\r\n    <string name=\"numberofcard\">Du har {0} kort</string>\r\n    <string name=\"bar\">Bar</string>\r\n    <string name=\"cardPrice\">Price</string>\r\n    <string name=\"confirmation\" />\r\n    <string name=\"areYouSure\" />\r\n    <string name=\"yes\" />\r\n    <string name=\"no\" />\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision 1f77cb723ab191909c74861a7f99d89ecea2cae6)
++++ app/src/main/res/values/strings.xml	(date 1606382210030)
+@@ -3,8 +3,11 @@
+     <string name="numberofcard">Du har {0} kort</string>
+     <string name="bar">Bar</string>
+     <string name="cardPrice">Price</string>
+-    <string name="confirmation" />
+-    <string name="areYouSure" />
+-    <string name="yes" />
+-    <string name="no" />
++    <string name="confirmation">Confirmation</string>
++    <string name="areYouSure">Are you sure you want to purchase?</string>
++    <string name="yes" > Yes </string>
++    <string name="no">No</string>
++
++    <dimen name="width_barcode">300dp</dimen>
++    <dimen name="height_barcode">65dp</dimen>
+ </resources>
+\ No newline at end of file
