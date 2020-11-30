@@ -6,7 +6,7 @@ import com.ebookfrenzy.clipmycard.DAO.CardDao
 import com.ebookfrenzy.clipmycard.models.Card
 
 
-@Database(entities = [Card::class], version = 2)
+@Database(entities = [Card::class], version = 3)
 abstract class MyDataBase : RoomDatabase() {
     abstract fun cardDao(): CardDao
 }

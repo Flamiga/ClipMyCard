@@ -1,13 +1,17 @@
 package com.ebookfrenzy.clipmycard
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Bitmap.createBitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Display
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ebookfrenzy.clipmycard.adapter.CardAdapter
@@ -18,14 +22,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 import androidx.lifecycle.Observer
 import com.ebookfrenzy.clipmycard.Fragment.ScanbarFragment
 import com.ebookfrenzy.clipmycard.Fragment.YesOrNoFragment
-//import com.ebookfrenzy.clipmycard.Fragment.YesOrNoFragment
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.oned.Code128Writer
+import kotlinx.android.synthetic.main.scanbar_layout.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private val bars =
-        arrayOf("Alle", "Heidi's bar, Aarhus", "Guldhornerne, Aarhus", "The Australian Bar, Aarhus")
+        arrayOf("All", "Heidi's bar, Aarhus", "Guldhornerne, Aarhus", "The Australian Bar, Aarhus")
 
     private lateinit var cardList: MutableList<Card>
     private lateinit var cardAdapter: CardAdapter
@@ -34,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        displayBitmap("12331156861")
         initRepository(this)
 
 
@@ -47,10 +52,11 @@ class MainActivity : AppCompatActivity() {
                     Log.d("cards:", cardList.toString())
             }
         })
-        val String = getString(R.string.numberofcard)
+       numberOfCardTextView.text = resources.getString(R.string.numberofcard)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, bars)
         updateUI()
 
+/*what is this?*/
         GlobalScope.launch {
             val card = Card(6, "Hornsleth", false, 200, 0)
             CardRepository.addCard(card)
@@ -64,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onItemSelected(
@@ -76,12 +82,12 @@ class MainActivity : AppCompatActivity() {
                 // this code is called whenever the spinner is clicked
                 Toast.makeText(
                     this@MainActivity,
-                    "Du har valgt: " + bars[position],
+                    "You have selected: " + bars[position],
                     Toast.LENGTH_SHORT
                 ).show()
                 //filter bar i dropdown
                 val selectBar = bars[position]
-                if (selectBar == "Alle") {
+                if (selectBar == "All") {
                     cardAdapter.filter?.filter("")
                 } else {
                     cardAdapter.filter?.filter(selectBar)
@@ -129,56 +135,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showCustomDialog(card: Card) {
-        val dialog = ScanbarFragment(card)
+        val dialog = ScanbarFragment(card, applicationContext)
         dialog.show(supportFragmentManager, "customFragment")
     }
-
 
 
     /***Code from https://www.brightec.co.uk/blog/howto-creating-barcode-kotlin-android ***/
 
 
-   /* private fun createBarcodeBitmap(
-        barcodeValue: String,
-        @ColorInt barcodeColor: Int,
-        @ColorInt backgroundColor: Int,
-        widthPixels: Int,
-        heightPixels: Int
-    ): Bitmap {
-        val bitMatrix = Code128Writer().encode(
-            barcodeValue,
-            BarcodeFormat.CODE_128,
-            widthPixels,
-            heightPixels
-        )
+ /*
 
-        val pixels = IntArray(bitMatrix.width * bitMatrix.height)
-        for (y in 0 until bitMatrix.height) {
-            val offset = y * bitMatrix.width
-            for (x in 0 until bitMatrix.width) {
-                pixels[offset + x] =
-                    if (bitMatrix.get(x, y)) barcodeColor else backgroundColor
-            }
-        }
-
-        val bitmap = Bitmap.createBitmap(
-            bitMatrix.width,
-            bitMatrix.height,
-            Bitmap.Config.ARGB_8888
-        )
-        bitmap.setPixels(
-            pixels,
-            0,
-            bitMatrix.width,
-            0,
-            0,
-            bitMatrix.width,
-            bitMatrix.height
-        )
-        return bitmap
-    }
 */
-
     private fun updateUI() {
         cardList = CardRepository.getData()
 
