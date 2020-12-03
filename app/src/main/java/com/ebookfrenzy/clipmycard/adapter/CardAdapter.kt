@@ -1,9 +1,9 @@
 package com.ebookfrenzy.clipmycard.adapter
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,30 +12,37 @@ import android.widget.CheckBox
 import android.widget.Filterable
 import android.widget.Filter
 import android.widget.Toast
+import androidx.core.view.ViewPropertyAnimatorUpdateListener
+import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.ebookfrenzy.clipmycard.Fragment.YesOrNoFragment
 import com.ebookfrenzy.clipmycard.R
 import com.ebookfrenzy.clipmycard.models.Card
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.list_element.view.*
 import java.util.*
 import kotlin.collections.ArrayList
+import android.content.Context as context
 
 class CardAdapter(
     var cardList: List<Card>,
     val cardClicked: (Card) -> Unit
+   // var updateListener: UpdateCard,
+    //private var activated: MutableSet<String> = HashSet()
 
 
 ) : RecyclerView.Adapter<CardAdapter.ViewHolder>(), Filterable {
 
-    private lateinit var context: Context
+    private lateinit var context: context
 
     var cardFilterList = ArrayList<Card>()
 
     init {
         cardFilterList = cardList as ArrayList<Card>
     }
+
 
     //this method is returning the view for each item in the list
     //also something you must override
@@ -48,13 +55,12 @@ class CardAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // holder.bindItems(cardList[position])
-        holder.bindItems(cardFilterList[position], cardClicked)
+        holder.bindItems(cardFilterList[position], cardClicked, context)
     }
 
     //this method is giving the size of the list - this MUST be implemented as this
     //also overrides something from the RecyclerView Class
     override fun getItemCount(): Int {
-        // kan man det her??
         return cardFilterList.size
         //return cardList.size
     }
@@ -65,11 +71,15 @@ class CardAdapter(
 
         fun bindItems(
             card: Card,
-            cardClicked: (Card) -> Unit
+            cardClicked: (Card) -> Unit,
+            context: context
+         //   activated: MutableSet<String>,
+           // updateListener: UpdateCard
 
         ) {
             itemView.list_element_title.text = card.title
-            itemView.list_element_price.text = card.price.toString()
+            itemView.list_element_price.text = card.price.toString() + " "+"kr."
+
 
             itemView.checkBox1.isChecked = false
             itemView.checkBox2.isChecked = false
@@ -84,7 +94,50 @@ class CardAdapter(
 
 
             if (card.activated) {
-                itemView.list_element_card.setCardBackgroundColor(Color.rgb(231, 219, 40))
+                /*Insert gradient on activated card
+                https://stackoverflow.com/questions/6115715/how-do-i-programmatically-set-the-background-color-gradient-on-a-custom-title-ba */
+                var cardColor = GradientDrawable(
+                  GradientDrawable.Orientation.BR_TL,
+                    intArrayOf(0xFFe6b800.toInt(), 0xfffff5cc.toInt())
+                )
+                cardColor.setCornerRadius(50f)
+                itemView.list_element_card.setBackgroundDrawable(cardColor)
+               // itemView.list_element_card(cardColor)
+                //itemView.list_element_card.setCardBackgroundColor(Color.rgb(231, 219, 40))
+
+            //if statement if card = 10 grey or then yellow
+                if(card.checked == 10){
+
+                    itemView.checkBox1.isClickable = false
+                    itemView.checkBox2.isClickable = false
+                    itemView.checkBox3.isClickable = false
+                    itemView.checkBox4.isClickable = false
+                    itemView.checkBox5.isClickable = false
+                    itemView.checkBox6.isClickable = false
+                    itemView.checkBox7.isClickable = false
+                    itemView.checkBox8.isClickable = false
+                    itemView.checkBox9.isClickable = false
+                    itemView.checkBox10.isClickable = false
+                    card.activated === false
+
+                    var cardColor = GradientDrawable(
+                        GradientDrawable.Orientation.BR_TL,
+                        intArrayOf(0xFF8c8c8c.toInt(), 0xffd9d9d9.toInt())
+                    )
+                    cardColor.setCornerRadius(50f)
+                    itemView.list_element_card.setBackgroundDrawable(cardColor)
+                    Toast.makeText(context,"Sorry you have used this card", Toast.LENGTH_LONG).show()
+                }else{
+                    var cardColor = GradientDrawable(
+                        GradientDrawable.Orientation.BR_TL,
+                        intArrayOf(0xFFe6b800.toInt(), 0xfffff5cc.toInt())
+                    )
+                    cardColor.setCornerRadius(50f)
+                    itemView.list_element_card.setBackgroundDrawable(cardColor)
+
+                }
+
+
                 itemView.checkBox1.setOnClickListener {
                     if (itemView.checkBox1.isChecked) {
                         card.checked++
@@ -149,16 +202,25 @@ class CardAdapter(
                         itemView.checkBox9.isChecked = true
                     }
                 }
+
                 // sætter den sidste kryds til at skifte farve for at vise at kortet er brugt op.
                 itemView.checkBox10.setOnClickListener {
                     if (itemView.checkBox10.isChecked) {
                         card.checked++
+                        /*initiliase the grey color*/
+                        var cardColor = GradientDrawable(
+                            GradientDrawable.Orientation.BR_TL,
+                            intArrayOf(0xFF8c8c8c.toInt(), 0xffd9d9d9.toInt())
+                        )
+                        cardColor.setCornerRadius(50f)
+                        itemView.list_element_card.setBackgroundDrawable(cardColor)
                         itemView.list_element_card.setCardBackgroundColor(Color.GRAY)
                     } else {
                         itemView.checkBox10.isChecked = true
                     }
                 }
 
+                /*????*/
                 if (card.checked >= 1)
                     itemView.checkBox1.isChecked = true
                 if (card.checked >= 2)
@@ -179,6 +241,7 @@ class CardAdapter(
                     itemView.checkBox9.isChecked = true
                 if (card.checked >= 10)
                     itemView.checkBox10.isChecked = true
+
             } else {
 
                 itemView.checkBox1.isClickable = false
@@ -191,7 +254,16 @@ class CardAdapter(
                 itemView.checkBox8.isClickable = false
                 itemView.checkBox9.isClickable = false
                 itemView.checkBox10.isClickable = false
+
+                /*initiliase the grey color*/
+                var cardColor = GradientDrawable(
+                    GradientDrawable.Orientation.BR_TL,
+                    intArrayOf(0xFF8c8c8c.toInt(), 0xffd9d9d9.toInt())
+                )
+                cardColor.setCornerRadius(50f)
+                itemView.list_element_card.setBackgroundDrawable(cardColor)
                 itemView.list_element_card.setCardBackgroundColor(Color.GRAY)
+
                 itemView.list_element_card.setOnClickListener { cardClicked(card) }
 
             }
@@ -199,6 +271,7 @@ class CardAdapter(
         }
 
     }
+
 
 
 

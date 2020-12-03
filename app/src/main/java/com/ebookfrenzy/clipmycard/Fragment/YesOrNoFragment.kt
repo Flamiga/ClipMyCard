@@ -8,7 +8,8 @@ import androidx.fragment.app.DialogFragment
 import com.ebookfrenzy.clipmycard.R
 import com.ebookfrenzy.clipmycard.models.Card
 
-open class YesOrNoFragment(var yesClick: (Card) -> Unit, var noClick: () -> Unit, card: Card) : DialogFragment() {
+open class
+YesOrNoFragment(var yesClick: (Card) -> Unit, var noClick: () -> Unit, card: Card) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         //Here we create a new dialogbuilder;

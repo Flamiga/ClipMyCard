@@ -10,6 +10,7 @@ import android.view.Display
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,9 +25,12 @@ import com.ebookfrenzy.clipmycard.Fragment.ScanbarFragment
 import com.ebookfrenzy.clipmycard.Fragment.YesOrNoFragment
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.oned.Code128Writer
+import kotlinx.android.synthetic.main.list_element.*
 import kotlinx.android.synthetic.main.scanbar_layout.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
+import java.text.NumberFormat
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,11 +56,12 @@ class MainActivity : AppCompatActivity() {
                     Log.d("cards:", cardList.toString())
             }
         })
-       numberOfCardTextView.text = resources.getString(R.string.numberofcard)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, bars)
-        updateUI()
 
-/*what is this?*/
+        /*referere til min være i min strings.xml*/
+        numberOfCardTextView.text = resources.getString(R.string.numberofcard, 0)
+
+
+/*what is this?, and how can i use the add and update?*/
         GlobalScope.launch {
             val card = Card(6, "Hornsleth", false, 200, 0)
             CardRepository.addCard(card)
@@ -65,7 +70,13 @@ class MainActivity : AppCompatActivity() {
             CardRepository.updateCard(card1)
         }
 
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, bars)
+        updateUI()
+        //The spinner is defined in our xml file
 
+        //we use a predefined simple spinner drop down,
+        //you could define your own layout, so that for instance
+        //there was pictures in the drop down list.
         spinner.adapter = adapter
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -98,62 +109,85 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     //callback function from yes/no dialog - for yes choice
     fun yesClicked(card: Card) {
         val toast = Toast.makeText(
             this,
-            "yes button clicked", Toast.LENGTH_LONG
+            "Yes button clicked", Toast.LENGTH_LONG
         )
         card.activated = true
+        val numberofactivated = numberOfActivatedCard()
+        numberOfCardTextView.text = resources.getString(R.string.numberofcard, numberofactivated)
         cardAdapter.notifyDataSetChanged()
         showCustomDialog(card)
         toast.show()
     }
 
-
-    //callback function from yes/no dialog - for no choice
-    fun noClick() {
-        //Here we override the method and can now do something
-        val toast = Toast.makeText(
-            this,
-            "no button clicked", Toast.LENGTH_LONG
-        )
-        toast.show()
-    }
-
-    fun cardClicked(card: Card) {
-        showDialog(card)
-    }
-
-    fun showDialog(card: Card) {
-        //showing our dialog.
-
-        val dialog = YesOrNoFragment(::yesClicked, ::noClick, card)
-        //Here we show the dialog
-        //The tag "MyFragement" is not important for us.
-        dialog.show(supportFragmentManager, "myFragment")
-    }
-
-    fun showCustomDialog(card: Card) {
-        val dialog = ScanbarFragment(card, applicationContext)
-        dialog.show(supportFragmentManager, "customFragment")
-    }
-
-
-    /***Code from https://www.brightec.co.uk/blog/howto-creating-barcode-kotlin-android ***/
-
-
- /*
-
-*/
-    private fun updateUI() {
+    
+    fun numberOfActivatedCard(): Int {
+        //for loop der løber igennem cardFilterList
+        var counter = 0
+        var discounter = -1
         cardList = CardRepository.getData()
+        for (card in cardList) {
+            if (card.activated)
+                counter++
+           if(card.activated === false)
+                discounter--
+        }
 
-        card_recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        cardAdapter = CardAdapter(cardList, ::cardClicked)
 
-        card_recyclerView.adapter = cardAdapter
+
+        return counter
     }
+
+
+
+
+
+
+
+
+//callback function from yes/no dialog - for no choice
+fun noClick() {
+    //Here we override the method and can now do something
+    val toast = Toast.makeText(
+        this,
+        "No button clicked", Toast.LENGTH_LONG
+    )
+    toast.show()
+}
+
+fun cardClicked(card: Card) {
+    showDialog(card)
+}
+
+fun showDialog(card: Card) {
+    //showing our dialog.
+
+    val dialog = YesOrNoFragment(::yesClicked, ::noClick, card)
+    //Here we show the dialog
+    //The tag "MyFragement" is not important for us.
+    dialog.show(supportFragmentManager, "myFragment")
+}
+
+fun showCustomDialog(card: Card) {
+    val dialog = ScanbarFragment(card, applicationContext)
+    dialog.show(supportFragmentManager, "customFragment")
+}
+
+
+private fun updateUI() {
+    cardList = CardRepository.getData()
+
+    card_recyclerView.layoutManager =
+        LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+
+    cardAdapter = CardAdapter(cardList, ::cardClicked)
+
+    card_recyclerView.adapter = cardAdapter
+}
 
 }

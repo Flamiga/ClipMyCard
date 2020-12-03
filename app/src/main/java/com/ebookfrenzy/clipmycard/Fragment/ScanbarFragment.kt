@@ -35,6 +35,7 @@ open class ScanbarFragment(card: Card, context: Context) : DialogFragment() {
         displayBitmap("12351652545")
         return view
     }
+    /***Code from https://www.brightec.co.uk/blog/howto-creating-barcode-kotlin-android ***/
 
     private fun createBarcodeBitmap(
         barcodeValue: String,
